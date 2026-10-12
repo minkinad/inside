@@ -1,0 +1,31 @@
+{
+  "name": "inside",
+  "private": true,
+  "packageManager": "pnpm@10.34.4",
+  "scripts": {
+    "dev": "dotenv -e .env -- pnpm --parallel --filter api --filter web dev",
+    "build": "dotenv -e .env -- pnpm --filter api build && dotenv -e .env -- pnpm --filter web build",
+    "lint": "biome lint .",
+    "format:check": "biome format .",
+    "format": "biome format --write .",
+    "validate:repo": "node scripts/validate-repo.mjs",
+    "db:validate": "dotenv -e .env -- pnpm --filter @inside/db exec prisma validate",
+    "typecheck": "pnpm --filter api typecheck && pnpm --filter web typecheck",
+    "test": "dotenv -e .env -- pnpm --filter api test",
+    "test:public-id": "bash scripts/test-employee-public-id.sh",
+    "db:generate": "pnpm --filter @inside/db generate",
+    "db:migrate": "dotenv -e .env -- pnpm --filter @inside/db migrate",
+    "db:seed": "dotenv -e .env -- pnpm --filter @inside/db seed"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "dotenv-cli": "^10.0.0",
+    "typescript": "^5.9.3",
+    "yaml": "2.9.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.30"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: inside
+      POSTGRES_PASSWORD: inside
+      POSTGRES_DB: inside
+    ports: ["5432:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inside"]
+      interval: 5s
+      retries: 10
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  minio:
+    image: bitnamilegacy/minio@sha256:451fe6858cb770cc9d0e77ba811ce287420f781c7c1b806a386f6896471a349c
+    environment:
+      MINIO_ROOT_USER: inside
+      MINIO_ROOT_PASSWORD: inside-local-secret
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [minio_data:/bitnami/minio/data]
+volumes:
+  postgres_data:
+  minio_data:
