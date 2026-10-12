@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+enum Role {
+  EMPLOYEE
+  ADMIN
+}
+enum PostCategory {
+  NEWS
+  DISCUSSION
+  QUESTION
+  IDEA
+  ACHIEVEMENT
+  EVENT
+  THANKS
+  SOCIAL
+}
+enum CareerKind {
+  JOINED
+  TRANSFER
+  PROMOTION
+  ROLE_CHANGE
+  AWARD
+}
+enum CelebrationKind {
+  BIRTHDAY
+  ANNIVERSARY
+  PROMOTION
+  ACHIEVEMENT
+  NEW_JOINER
+}
+
+model Unit {
+  id String @id @default(cuid())
+  name String
+  description String?
+  parentId String?
+  parent Unit? @relation("UnitTree", fields: [parentId], references: [id])
+  children Unit[] @relation("UnitTree")
+  leadId String?
+  people Employee[]
+  @@index([parentId])
+}
+
+model Employee {
+  id String @id @default(cuid())
+  publicId String @unique @default(dbgenerated("'employee/' || nextval('employee_public_id_seq'::regclass)::text"))
+  email String @unique
+  passwordHash String
+  role Role @default(EMPLOYEE)
+  name String
+  title String
+  team String
+  unitId String
+  unit Unit @relation(fields: [unitId], references: [id])
+  managerId String?
+  manager Employee? @relation("Manager", fields: [managerId], references: [id])
+  reports Employee[] @relation("Manager")
+  location String
+  avatarUrl String?
+  coverUrl String?
+  bio String @default("")
+  interests String[] @default([])
+  skills String[] @default([])
+  phone String?
+  joinedAt DateTime
+  birthdayMonth Int?
+  birthdayDay Int?
+  showBirthday Boolean @default(true)
+  publicCelebrations Boolean @default(true)
+  career CareerEvent[]
+  posts Post[]
+  comments Comment[]
+  reactions Reaction[]
+  celebrationReactions CelebrationReaction[]
+  celebrationComments CelebrationComment[]
+  @@index([name])
+  @@index([unitId])
+}
+
+model CareerEvent {
+  id String @id @default(cuid())
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  kind CareerKind
+  title String
+  detail String?
+  date DateTime
+  @@index([employeeId, date])
+}
+
+model Post {
+  id String @id @default(cuid())
+  authorId String
+  author Employee @relation(fields: [authorId], references: [id])
+  category PostCategory
+  title String
+  body String
+  imageUrl String?
+  published Boolean @default(true)
+  pinned Boolean @default(false)
+  createdAt DateTime @default(now())
+  comments Comment[]
+  reactions Reaction[]
+  @@index([published, createdAt])
+}
+
+model Comment {
+  id String @id @default(cuid())
+  postId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId String
+  author Employee @relation(fields: [authorId], references: [id])
+  parentId String?
+  parent Comment? @relation("CommentThread", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentThread")
+  body String
+  createdAt DateTime @default(now())
+}
+
+model Reaction {
+  id String @id @default(cuid())
+  postId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type String @default("like")
+  @@unique([postId, employeeId, type])
+}
+
+model Celebration {
+  id String @id @default(cuid())
+  employeeId String
+  kind CelebrationKind
+  title String
+  date DateTime
+  createdAt DateTime @default(now())
+  reactions CelebrationReaction[]
+  comments CelebrationComment[]
+  @@index([date])
+}
+
+model CelebrationReaction {
+  id String @id @default(cuid())
+  celebrationId String
+  celebration Celebration @relation(fields: [celebrationId], references: [id], onDelete: Cascade)
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  @@unique([celebrationId, employeeId])
+}
+
+model CelebrationComment {
+  id String @id @default(cuid())
+  celebrationId String
+  celebration Celebration @relation(fields: [celebrationId], references: [id], onDelete: Cascade)
+  authorId String
+  author Employee @relation(fields: [authorId], references: [id])
+  body String
+  createdAt DateTime @default(now())
+}
+
+model Event {
+  id String @id @default(cuid())
+  title String
+  description String
+  startsAt DateTime
+  endsAt DateTime
+  location String
+  imageUrl String?
+  link String?
+  createdAt DateTime @default(now())
+}
+
+model Benefit {
+  id String @id @default(cuid())
+  category String
+  title String
+  description String
+  eligibility String
+  instruction String
+  serviceUrl String?
+  contact String
+  imageUrl String?
+  allowedTeams String[] @default([])
+  active Boolean @default(true)
+}
+
+model BrandAsset {
+  id String @id @default(cuid())
+  category String
+  title String
+  description String
+  usage String
+  objectKey String
+  mimeType String
+  size Int
+  version String
+  updatedAt DateTime @updatedAt
+  restricted Boolean @default(false)
+}
+
+model AuditEntry {
+  id String @id @default(cuid())
+  actorId String
+  action String
+  entity String
+  entityId String
+  createdAt DateTime @default(now())
+  details Json?
+  @@index([createdAt])
+}
