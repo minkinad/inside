@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Фон для встреч min.Inside</title>
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#4c2ca9"/><stop offset="1" stop-color="#8cb8ff"/></linearGradient></defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <circle cx="1580" cy="250" r="290" fill="#b7a2ff" opacity=".9"/>
+  <circle cx="650" cy="980" r="610" fill="#a5b4fc" opacity=".35"/>
+  <path d="m150 125 22 120 105-59-64 96 111 44H201l22 121-73-101-73 101 22-121H-24l111-44-64-96 105 59Z" fill="#fff" opacity=".9"/>
+  <text x="145" y="920" fill="#fff" font-family="Georgia, serif" font-size="116">min.Inside</text>
+</svg>
