@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible problem in Inside.
+title: '[bug]: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include passwords, tokens, private employee data or security vulnerabilities. Report vulnerabilities through the private process in SECURITY.md.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What is broken, and which page or API operation is affected?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Sign in as ...
+        2. Open ...
+        3. Click ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Remove names, contact details and other private data before attaching.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, deployment type and relevant version.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Redact tokens, cookies, passwords and personal data.
+      render: shell
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context

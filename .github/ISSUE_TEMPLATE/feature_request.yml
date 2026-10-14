@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose an employee experience improvement.
+title: '[feature]: '
+body:
+  - type: markdown
+    attributes:
+      value: Do not include internal company documents, employee data or credentials.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Which employee journey is difficult today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Behavior
+      description: What should Inside do differently?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
