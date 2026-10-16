@@ -1,8 +1,10 @@
 # Changelog
 
-All notable changes to Inside are documented here. The project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when releases are published. The notes below are the draft for the planned `v1.0.1-beta.1` release; they remain under Unreleased until the release is tagged.
+All notable changes to Inside are documented here. The project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when releases are published.
 
 ## [Unreleased]
+
+## [1.0.1-beta.1] - 2026-10-16
 
 ### Added
 
