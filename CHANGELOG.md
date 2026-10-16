@@ -34,6 +34,7 @@ All notable changes to Inside are documented here. The project follows [Keep a C
 - Protected web mutations reject foreign origins. Login rate limits use an atomic Redis operation and fail closed if Redis is unavailable.
 - Successful profile-photo uploads update the UI without depending on an immediate profile refetch.
 - The Next.js dependency tree uses a patched PostCSS release.
+- Restored Biome's platform binaries in the pnpm lockfile so frozen installs can run CI formatting and lint checks.
 
 ### Security
 
