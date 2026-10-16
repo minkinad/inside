@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Inside are documented here. The project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when releases are published. No release tag exists yet.
+All notable changes to Inside are documented here. The project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when releases are published. The notes below are the draft for the planned `v1.0.1-beta.1` release; they remain under Unreleased until the release is tagged.
 
 ## [Unreleased]
 
@@ -21,10 +21,6 @@ All notable changes to Inside are documented here. The project follows [Keep a C
 - Removed legacy color aliases and hard-coded diagram colors; accents, organization links and shadows now follow the shared violet tokens in both themes. Benefit filters also wrap on narrow screens.
 - Administrative writes and audit entries commit together in a PostgreSQL transaction.
 
-### Deprecated
-
-- No deprecations in this unreleased change.
-
 ### Removed
 
 - Internal employee IDs from employee-facing API responses.
@@ -40,3 +36,9 @@ All notable changes to Inside are documented here. The project follows [Keep a C
 
 - Added response security headers, stricter production environment checks and safe download headers for brand assets.
 - Brand upload removes the new object if its database transaction fails.
+
+### Upgrade notes
+
+- Back up PostgreSQL and MinIO before upgrading a populated environment. Apply the employee public ID migration with `pnpm db:migrate`; see [database migration and rollback notes](docs/architecture/database.md).
+- Existing installations changing to `min.Inside` and `@min.ex` need the separate [data migration and brand-asset procedure](docs/development/rebrand-data.md). Do not run the demo seed against existing data.
+- Update integrations and saved employee links to use `/people/employee/{number}` and the `publicId` API field.
