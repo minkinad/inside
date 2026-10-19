@@ -10,7 +10,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.17.1",
+    "@prisma/client": "^7.10.1",
     "bcryptjs": "^3.0.2",
     "minio": "^8.0.6"
   },
